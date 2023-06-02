@@ -17,10 +17,10 @@ public final class RenameFileMojo extends AbstractMojo {
     @Parameter(property = "skip", defaultValue = "false")
     private Boolean skip;
 
-    @Parameter(property = "source", readonly = true)
+    @Parameter(property = "source", required = true)
     private String source;
 
-    @Parameter(property = "target", readonly = true)
+    @Parameter(property = "target", required = true)
     private String target;
 
     @Parameter(property = "workingDirectory", defaultValue = "${basedir}")
