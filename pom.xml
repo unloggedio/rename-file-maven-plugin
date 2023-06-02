@@ -1,161 +1,150 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>9</version>
-  </parent>
-  <groupId>de.matrixweb</groupId>
-  <artifactId>rename-file-maven-plugin</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
-  <packaging>maven-plugin</packaging>
+    <groupId>video.bug</groupId>
+    <artifactId>rename-file-maven-plugin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>maven-plugin</packaging>
 
-  <name>rename-file-maven-plugin</name>
-  <description>
-    This mojo renames a file.
-  </description>
-  <url>https://github.com/KnisterPeter/rename-file-maven-plugin</url>
+    <name>Rename multiple files - Maven Plugin</name>
+    <description>Rename multiple files using regex pattern search and replace</description>
 
-  <licenses>
-    <license>
-      <name>BSD</name>
-      <url>http://www.opensource.org/licenses/bsd-license.php</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+    <licenses>
+        <license>
+            <name>AGPL 3</name>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Parth Mudgal</name>
+            <email>artpar@gmail.com</email>
+            <id>artpar</id>
+            <organization>Unlogged Inc</organization>
+            <organizationUrl>https://unlogged.io</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>IST</timezone>
+        </developer>
+    </developers>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <scm>
+        <url>https://github.com/unloggedio/rename-file-maven-plugin</url>
+        <developerConnection>scm:git:git@github.com:unloggedio/rename-file-maven-plugin.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
-  <developers>
-    <developer>
-      <name>Markus Wolf</name>
-      <email>knister.peter@shadowrun-clan.de</email>
-    </developer>
-  </developers>
 
-  <scm>
-    <url>https://github.com/KnisterPeter/rename-file-maven-plugin</url>
-    <connection>scm:git:git@github.com:KnisterPeter/rename-file-maven-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:KnisterPeter/rename-file-maven-plugin.git</developerConnection>
-  </scm>
 
-  <properties>
-    <java.version>1.6</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  <prerequisites>
-    <maven>3.1.0</maven>
-  </prerequisites>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.0</version>
+            <scope>provided</scope>
+        </dependency>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-core</artifactId>
-      <version>3.1.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-      <version>3.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.plugin-tools</groupId>
-      <artifactId>maven-plugin-annotations</artifactId>
-      <version>3.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.sonatype.plexus</groupId>
-      <artifactId>plexus-build-api</artifactId>
-      <version>0.0.7</version>
-    </dependency>
-  </dependencies>
+        <!-- dependencies to annotations -->
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.4</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.7</version>
-        <configuration>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.4</version>
-        <configuration>
-          <goalPrefix>package-json</goalPrefix>
-        </configuration>
-        <executions>
-          <execution>
-            <id>default-descriptor</id>
-            <goals>
-              <goal>descriptor</goal>
-            </goals>
-            <phase>process-classes</phase>
-          </execution>
-          <execution>
-            <id>help-descriptor</id>
-            <goals>
-              <goal>helpmojo</goal>
-            </goals>
-            <phase>process-classes</phase>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <versionRange>[1.0,)</versionRange>
-                    <goals>
-                      <goal>enforce</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-plugin-plugin</artifactId>
-                    <versionRange>[3.4,)</versionRange>
-                    <goals>
-                      <goal>descriptor</goal>
-                      <goal>helpmojo</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+
+
+
+        </plugins>
+    </build>
+
 </project>
